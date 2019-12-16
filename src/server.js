@@ -50,7 +50,7 @@ app.post('/quotes', async (req,res)=>{ // make a new note and send it to the JSO
 app.get('/quotes/:id',(req,res)=>{ //send back a specific quote based on its id
   try{
     const quote = data.quotes.find(quote => quote.id == req.params.id);
-    if quote{
+    if (quote){
       res.status(200).json(quote)
     }
     else{
