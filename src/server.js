@@ -1,32 +1,33 @@
 const express = require('express');
 const app = express()
+const cors = require('cors');
 const port = process.env.PORT || 3000
 
 
-
+app.use(cors())
 app.use(express.json()); //all request will be handled as JSON
 
 app.get('/',(req,res)=>{ //entry route
   try{
-    res.send("type in /greetings in the URL to see the a cool message")
+  res.status(200).send("type in /greetings in the URL to see the a cool message")
   }catch(err){
-    res.json({message:err.message})
+    res.status(500).json({message:err.message})
   }
 });
 
 app.get('/greetings',(req,res)=>{ //send back a greeting
   try{
-    res.json({greeting: "hello y'all"})
+    res.status(200).json({greeting: "hello y'all"})
   }catch(err){
-    res.json({message:err.message})
+    res.status(500).json({message:err.message})
   }
 })
 
 app.get('/quotes', async (req,res)=>{ //send back all the quotes in the API's JSON file
    try{
-    await res.json(data)
+    await res.status(200).json(data)
   }catch(err){
-    res.json({message:err.message})
+    res.status(500).json({message:err.message})
   }
 
 })
@@ -38,18 +39,23 @@ app.post('/quotes', async (req,res)=>{ // make a new note and send it to the JSO
      quote: req.body.quote,
      author: req.body.author
    }
-   res.send(quote) //send the quote the user just made back to them to make sure it has been contructed
+   res.status(200).send(quote) //send the quote the user just made back to them to make sure it has been contructed
         }catch(err){
-          res.json({message:err.message})
+          res.status(500).json({message:err.message})
         }
 });
 
 app.get('/quotes/:id',(req,res)=>{ //send back a specific quote based on its id
   try{
     const quote = data.quotes.find(quote => quote.id == req.params.id);
-    res.json(quote)
+    if quote{
+      res.status(200).json(quote)
+    }
+    else{
+      rest.status(404).json({message: "quote not found"})
+    }
   }catch(err){
-    res.json({message:err.message})
+    res.status(500).json({message:err.message})
   }
 
 })
