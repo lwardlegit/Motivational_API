@@ -4,7 +4,9 @@ const cors = require('cors');
 const port = process.env.PORT || 3000
 
 
-app.use(cors())
+app.use(cors({
+  origin: 'https://motivational--api.herokuapp.com/'
+}));
 app.use(express.json()); //all request will be handled as JSON
 
 app.get('/',(req,res)=>{ //entry route
